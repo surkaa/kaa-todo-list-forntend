@@ -27,10 +27,9 @@
     </el-button>
     <p>没有账号? 点
       <router-link to="register"
-                   style="text-decoration: none; color:#5454de;"
-      >这 里
+                   style="text-decoration: none; color:#eee; font-weight: 700"
+      >这里注册
       </router-link>
-      注册
     </p>
   </div>
 </template>

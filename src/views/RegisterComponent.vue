@@ -2,14 +2,14 @@
   <div class="register">
     <h1>注 册</h1>
     <el-input
-        v-model="login.account"
+        v-model="register.account"
         type="text"
         maxlength="256"
         minlength="6"
         placeholder="用户账号: "
     />
     <el-input
-        v-model="login.password"
+        v-model="register.password"
         type="password"
         maxlength="512"
         minlength="8"
@@ -17,7 +17,7 @@
         show-password
     />
     <el-input
-        v-model="login.rePassword"
+        v-model="register.rePassword"
         type="password"
         maxlength="512"
         minlength="8"
@@ -34,10 +34,9 @@
     </el-button>
     <p>已有账号? 点
       <router-link to="login"
-                   style="text-decoration: none; color:#5454de;"
-      >这 里
+                   style="text-decoration: none; color:#eee; font-weight: 700"
+      >这里登录
       </router-link>
-      登录
     </p>
   </div>
 </template>
@@ -46,7 +45,7 @@
 export default {
   data() {
     return {
-      login: {
+      register: {
         account: "",
         password: "",
         rePassword: "",
