@@ -60,7 +60,11 @@ export default {
       ).then(
           function (res) {
             if (res.data.code > 0) {
-              alert("登录错误: " + res.data.description)
+              alert("注册错误: " + res.data.description)
+              return
+            } else {
+              alert("注册成功 即将跳转登陆页面")
+              window.location.href = '/todolist/login'
             }
           }
       ).catch(function (error) {

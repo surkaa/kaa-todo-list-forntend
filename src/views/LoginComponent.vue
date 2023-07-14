@@ -53,6 +53,10 @@ export default {
           function (res) {
             if (res.data.code > 0) {
               alert("登录错误: " + res.data.description)
+              return
+            } else {
+              alert("登录成功 将进入ToDoList页面")
+              window.location.href = '/todolist'
             }
           }
       ).catch(function (error) {
