@@ -1,13 +1,18 @@
 import Vue from 'vue'
 import VueRouter, {RouteConfig} from 'vue-router'
-import AuthPage from "@/views/AuthPage.vue";
+import RegisterComponent from "@/views/RegisterComponent.vue"
+import LoginComponent from "@/views/LoginComponent.vue"
 
 Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
     {
         path: '/login',
-        component: AuthPage
+        component: LoginComponent
+    },
+    {
+        path: '/register',
+        component: RegisterComponent
     }
 ]
 
