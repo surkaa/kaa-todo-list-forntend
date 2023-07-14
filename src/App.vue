@@ -24,6 +24,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #2c3e50;
+  background: linear-gradient(45deg, #3d6d9d, #2c3e50);
 }
 </style>
