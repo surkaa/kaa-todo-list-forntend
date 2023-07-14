@@ -17,7 +17,7 @@
         show-password
     />
     <el-input
-        v-model="register.rePassword"
+        v-model="register.checkPassword"
         type="password"
         maxlength="512"
         minlength="8"
@@ -48,7 +48,7 @@ export default {
       register: {
         account: "",
         password: "",
-        rePassword: "",
+        checkPassword: "",
       }
     }
   },
