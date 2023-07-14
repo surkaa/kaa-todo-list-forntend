@@ -46,7 +46,19 @@ export default {
   },
   methods: {
     loginAction() {
-      console.log('login')
+      this.$axios.post(
+          'http://localhost:8000/users/login',
+          this.login
+      ).then(
+          function (res) {
+            if (res.data.code > 0) {
+              alert("登录错误: " + res.data.description)
+            }
+          }
+      ).catch(function (error) {
+        console.log(error)
+        alert("登录发生错误, 请稍后重试")
+      })
     }
   }
 }

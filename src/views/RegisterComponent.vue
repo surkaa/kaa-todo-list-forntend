@@ -54,7 +54,19 @@ export default {
   },
   methods: {
     registerAction() {
-      console.log('register')
+      this.$axios.post(
+          'http://localhost:8000/users/register',
+          this.register
+      ).then(
+          function (res) {
+            if (res.data.code > 0) {
+              alert("登录错误: " + res.data.description)
+            }
+          }
+      ).catch(function (error) {
+        console.log(error)
+        alert("注册发生错误, 请稍后重试")
+      })
     }
   }
 }
