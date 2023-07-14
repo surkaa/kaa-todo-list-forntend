@@ -1,9 +1,15 @@
 import Vue from 'vue'
 import VueRouter, {RouteConfig} from 'vue-router'
+import AuthPage from "@/views/AuthPage.vue";
 
 Vue.use(VueRouter)
 
-const routes: Array<RouteConfig> = []
+const routes: Array<RouteConfig> = [
+    {
+        path: '/login',
+        component: AuthPage
+    }
+]
 
 const router = new VueRouter({
     mode: 'history',
