@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter, {RouteConfig} from 'vue-router'
-import RegisterComponent from "@/views/RegisterComponent.vue"
-import LoginComponent from "@/views/LoginComponent.vue"
+import RegisterComponent from "@/views/RegisterPage.vue"
+import LoginComponent from "@/views/LoginPage.vue"
 
 Vue.use(VueRouter)
 
