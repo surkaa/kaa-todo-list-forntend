@@ -70,9 +70,17 @@ export default {
 
 <style scoped>
 .login {
-  width: 320px;
-  height: 500px;
-  padding: 16px;
+  width: 640px;
+  height: 800px;
+  padding: 32px;
+}
+
+@media screen and (max-width: 768px) {
+  .login {
+    width: 320px;
+    height: 500px;
+    padding: 16px;
+  }
 }
 
 .login h1 {

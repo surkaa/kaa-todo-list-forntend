@@ -78,9 +78,17 @@ export default {
 
 <style scoped>
 .register {
-  width: 320px;
-  height: 500px;
-  padding: 16px;
+  width: 640px;
+  height: 800px;
+  padding: 32px;
+}
+
+@media screen and (max-width: 768px) {
+  .register {
+    width: 320px;
+    height: 500px;
+    padding: 16px;
+  }
 }
 
 .register h1 {
