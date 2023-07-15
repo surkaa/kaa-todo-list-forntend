@@ -1,30 +1,38 @@
 <template>
   <div class="register">
     <h1>注 册</h1>
-    <el-input
-        v-model="register.account"
-        type="text"
-        maxlength="256"
-        minlength="6"
-        placeholder="用户账号: "
-    />
-    <el-input
-        v-model="register.password"
-        type="password"
-        maxlength="512"
-        minlength="8"
-        placeholder="用户密码: "
-        show-password
-    />
-    <el-input
-        v-model="register.checkPassword"
-        type="password"
-        maxlength="512"
-        minlength="8"
-        placeholder="确认密码: "
-        show-password
-        @keydown.enter.native="registerAction"
-    />
+    <el-form :rules="rules" :model="register" ref="register">
+      <el-form-item prop="account">
+        <el-input
+            v-model="register.account"
+            type="text"
+            maxlength="256"
+            minlength="6"
+            placeholder="用户账号: "
+        />
+      </el-form-item>
+      <el-form-item prop="password">
+        <el-input
+            v-model="register.password"
+            type="password"
+            maxlength="512"
+            minlength="8"
+            placeholder="用户密码: "
+            show-password
+        />
+      </el-form-item>
+      <el-form-item prop="checkPassword">
+        <el-input
+            v-model="register.checkPassword"
+            type="password"
+            maxlength="512"
+            minlength="8"
+            placeholder="确认密码: "
+            show-password
+            @keydown.enter.native="registerAction"
+        />
+      </el-form-item>
+    </el-form>
     <el-button
         type="primary"
         round
@@ -44,11 +52,57 @@
 <script>
 export default {
   data() {
+    const validateAccount = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error("请输入注册账号"))
+      } else {
+        if (value.length < 6) {
+          callback(new Error("注册账号的长度不能小于6位"))
+        } else if (value[0] >= '0' && value[0] <= '9') {
+          callback(new Error("注册账号不能以数字开头"))
+        } else {
+          callback()
+        }
+      }
+    }
+    const validatorPassword = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error("请输入注册密码"))
+      } else {
+        if (value.length < 8) {
+          callback(new Error("注册密码不能小于8位"))
+        }
+        callback()
+      }
+    }
+    const validatorCheckPassword = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error("请输入注册密码"))
+      } else {
+        if (value.length < 8) {
+          callback(new Error("注册密码不能小于8位"))
+        } else if (value !== this.register.password) {
+          callback(new Error("两次输入的密码不相同"))
+        }
+        callback()
+      }
+    }
     return {
       register: {
         account: "",
         password: "",
         checkPassword: "",
+      },
+      rules: {
+        account: [
+          {validator: validateAccount, trigger: 'blur'}
+        ],
+        password: [
+          {validator: validatorPassword, trigger: 'blur'}
+        ],
+        checkPassword: [
+          {validator: validatorCheckPassword, trigger: 'blur'}
+        ],
       }
     }
   },
@@ -100,7 +154,6 @@ export default {
 }
 
 .register .el-input {
-  width: 80%;
   margin-top: 8%;
 }
 

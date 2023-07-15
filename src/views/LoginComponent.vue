@@ -2,22 +2,30 @@
   <div class="login">
     <h1>登 录</h1>
     <p style="font-size: 12px">请使用用户中心账户登录</p>
-    <el-input
-        v-model="login.account"
-        type="text"
-        maxlength="256"
-        minlength="6"
-        placeholder="用户账号: "
-    />
-    <el-input
-        v-model="login.password"
-        type="password"
-        maxlength="512"
-        minlength="8"
-        placeholder="用户密码: "
-        show-password
-        @keydown.enter.native="loginAction"
-    />
+    <el-form :rules="rules" ref="login" :model="login">
+      <el-form-item prop="account">
+        <el-input
+            v-model="login.account"
+            type="text"
+            maxlength="256"
+            minlength="6"
+            placeholder="用户账号: "
+            autocomplete="off"
+        />
+      </el-form-item>
+      <el-form-item prop="password">
+        <el-input
+            v-model="login.password"
+            type="password"
+            maxlength="512"
+            minlength="8"
+            placeholder="用户密码: "
+            autocomplete="off"
+            show-password
+            @keydown.enter.native="loginAction"
+        />
+      </el-form-item>
+    </el-form>
     <el-button
         type="primary"
         round
@@ -37,10 +45,41 @@
 <script>
 export default {
   data() {
+    const account = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error("请输入登录账号"))
+      } else {
+        if (value.length < 6) {
+          callback(new Error("登录账号的长度不能小于6位"))
+        } else if (value[0] >= '0' && value[0] <= '9') {
+          callback(new Error("登录账号不能以数字开头"))
+        } else {
+          callback()
+        }
+      }
+    }
+    const password = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error("请输入登录密码"))
+      } else {
+        if (value.length < 8) {
+          callback(new Error("登录密码不能小于8位"))
+        }
+        callback()
+      }
+    }
     return {
       login: {
         account: "",
         password: ""
+      },
+      rules: {
+        account: [
+          {validator: account, trigger: 'blur'}
+        ],
+        password: [
+          {validator: password, trigger: 'blur'}
+        ]
       }
     }
   },
@@ -92,7 +131,6 @@ export default {
 }
 
 .login .el-input {
-  width: 80%;
   margin-top: 8%;
 }
 
