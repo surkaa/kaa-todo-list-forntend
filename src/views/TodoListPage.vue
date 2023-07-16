@@ -15,7 +15,7 @@ export default {
   },
   data() {
     return {
-      data: new Todo("No Title")
+      data: new Todo("No Title", "", true)
     }
   }
 }
@@ -23,5 +23,9 @@ export default {
 </script>
 
 <style scoped>
-
+.todo-list {
+  width: 80%;
+  background-color: #eeeeee;
+  border-radius: 10px;
+}
 </style>
