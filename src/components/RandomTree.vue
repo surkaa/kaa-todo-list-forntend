@@ -5,66 +5,55 @@
 </template>
 
 <script lang="ts">
-import {ref, onMounted} from 'vue';
+import Vue from 'vue';
 
-export default {
-  setup() {
-    const canvas = ref<HTMLCanvasElement | undefined>()
-
-    onMounted(() => {
-      if (canvas.value) {
-        drawCanvas();
-      }
-    })
-
-    function drawCanvas() {
-      const context = canvas.value!.getContext('2d')!;
-      context.translate(canvas.value!.width / 2, canvas.value!.height);
+export default Vue.extend({
+  mounted() {
+    this.drawCanvas();
+  },
+  methods: {
+    drawCanvas() {
+      const canvas = this.$refs.canvas as HTMLCanvasElement;
+      const context = canvas.getContext('2d');
+      if (!context) return;
+      context.translate(canvas.width / 2, canvas.height);
       context.scale(0.2, -0.2);
-      draw([0, 0], 30, 80, 90 + (Math.random() - 0.5) * 25);
-    }
-
-    function draw(v0: [number, number], thick: number, length: number, dir: number) {
+      this.draw(0, 0, 30, 80, 90 + (Math.random() - 0.5) * 25, context);
+    },
+    draw(v0x: number, v0y: number, thick: number, length: number, dir: number, context: CanvasRenderingContext2D) {
       if (thick < 20 && Math.random() < 0.4) {
-        if (Math.random() < 0.02) {
+        if (Math.random() < 0.1) {
           // 在树枝末端绘制花朵
-          drawFlower(v0);
+          this.drawFlower(v0x, v0y, context);
         }
         return;
       }
       if (thick < 1) {
-        // 在树枝末端绘制花朵
-        drawFlower(v0);
+        if (Math.random() < 0.05) {
+          // 在树枝末端绘制花朵
+          this.drawFlower(v0x, v0y, context);
+        }
         return;
       }
-      const context = canvas.value!.getContext('2d')!;
       context.beginPath();
-      context.moveTo(...v0);
-      const v1: [number, number] = [
-        v0[0] + length * Math.cos((Math.PI * dir) / 180),
-        v0[1] + length * Math.sin((Math.PI * dir) / 180),
-      ];
+      context.moveTo(v0x, v0y);
+      const v1x = v0x + length * Math.cos((Math.PI * dir) / 180);
+      const v1y = v0y + length * Math.sin((Math.PI * dir) / 180);
       context.lineWidth = thick;
       context.strokeStyle = '#111';
       context.lineCap = 'round';
-      context.lineTo(...v1);
+      context.lineTo(v1x, v1y);
       context.stroke();
-      draw(v1, thick * 0.8, length * 0.9, dir + 35 * Math.random());
-      draw(v1, thick * 0.8, length * 0.9, dir - 35 * Math.random());
-    }
-
-    function drawFlower(position: [number, number]) {
-      const context = canvas.value!.getContext('2d')!;
+      this.draw(v1x, v1y, thick * 0.8, length * 0.9, dir + 25 * Math.random(), context);
+      this.draw(v1x, v1y, thick * 0.8, length * 0.9, dir - 25 * Math.random(), context);
+    },
+    drawFlower(x: number, y: number, context: CanvasRenderingContext2D) {
       context.beginPath();
-      context.arc(position[0], position[1], 5, 0, 2 * Math.PI);
+      context.arc(x, y, 5, 0, 2 * Math.PI);
       context.fillStyle = 'red';
       context.fill();
       context.closePath();
-    }
-
-    return {
-      canvas,
-    };
+    },
   },
-};
+});
 </script>
