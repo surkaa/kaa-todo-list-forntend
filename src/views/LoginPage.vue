@@ -1,49 +1,57 @@
 <template>
   <div class="login">
-    <h1>登 录</h1>
-    <p style="font-size: 12px">请使用用户中心账户登录</p>
-    <el-form :rules="rules" ref="login" :model="login">
-      <el-form-item prop="account">
-        <el-input
-            v-model="login.account"
-            type="text"
-            maxlength="256"
-            minlength="6"
-            placeholder="用户账号: "
-            autocomplete="off"
-        />
-      </el-form-item>
-      <el-form-item prop="password">
-        <el-input
-            v-model="login.password"
-            type="password"
-            maxlength="512"
-            minlength="8"
-            placeholder="用户密码: "
-            autocomplete="off"
-            show-password
-            @keydown.enter.native="loginAction"
-        />
-      </el-form-item>
-    </el-form>
-    <el-button
-        type="primary"
-        round
-        style="width: 60%;"
-        @click="loginAction"
-    >登 录
-    </el-button>
-    <p>没有账号? 点
-      <router-link to="register"
-                   style="text-decoration: none; color:#eee; font-weight: 700"
-      >这里注册
-      </router-link>
-    </p>
+    <random-tree/>
+    <div class="login-body">
+      <h1>登 录</h1>
+      <p style="font-size: 12px">请使用用户中心账户登录</p>
+      <el-form :rules="rules" ref="login" :model="login">
+        <el-form-item prop="account">
+          <el-input
+              v-model="login.account"
+              type="text"
+              maxlength="256"
+              minlength="6"
+              placeholder="用户账号: "
+              autocomplete="off"
+          />
+        </el-form-item>
+        <el-form-item prop="password">
+          <el-input
+              v-model="login.password"
+              type="password"
+              maxlength="512"
+              minlength="8"
+              placeholder="用户密码: "
+              autocomplete="off"
+              show-password
+              @keydown.enter.native="loginAction"
+          />
+        </el-form-item>
+      </el-form>
+      <el-button
+          type="primary"
+          round
+          style="width: 60%;"
+          @click="loginAction"
+      >登 录
+      </el-button>
+      <p style="margin-top: 15px;"
+      >没有账号? 点
+        <router-link to="register"
+                     style="text-decoration: none; color:#eee; font-weight: 700"
+        >这里注册
+        </router-link>
+      </p>
+    </div>
   </div>
 </template>
 
 <script>
+import RandomTree from "@/components/RandomTree.vue";
+
 export default {
+  name: "LoginPage",
+  components: {RandomTree},
   data() {
     const account = (rule, value, callback) => {
       if (value === '') {
@@ -109,32 +117,40 @@ export default {
 
 <style scoped>
 .login {
-  width: 640px;
-  height: 800px;
-  padding: 32px;
+  display: flex;
+  flex-direction: row;
+}
+
+.login-body {
+  width: 400px;
+  padding: 64px;
 }
 
 @media screen and (max-width: 768px) {
   .login {
-    width: 320px;
-    height: 500px;
     padding: 16px;
+    flex-direction: column;
+  }
+
+  .login-body {
+    width: 300px;
+    padding: 32px;
   }
 }
 
-.login h1 {
+.login .login-body h1 {
   color: #eee;
 }
 
-.login p {
+.login .login-body p {
   color: #bbb;
 }
 
-.login .el-input {
+.login .login-body .el-input {
   margin-top: 8%;
 }
 
-.login .el-button {
+.login .login-body .el-button {
   margin-top: 10%;
 }
 </style>

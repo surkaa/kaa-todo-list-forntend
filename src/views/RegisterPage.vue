@@ -1,56 +1,65 @@
 <template>
   <div class="register">
-    <h1>注 册</h1>
-    <el-form :rules="rules" :model="register" ref="register">
-      <el-form-item prop="account">
-        <el-input
-            v-model="register.account"
-            type="text"
-            maxlength="256"
-            minlength="6"
-            placeholder="用户账号: "
-        />
-      </el-form-item>
-      <el-form-item prop="password">
-        <el-input
-            v-model="register.password"
-            type="password"
-            maxlength="512"
-            minlength="8"
-            placeholder="用户密码: "
-            show-password
-        />
-      </el-form-item>
-      <el-form-item prop="checkPassword">
-        <el-input
-            v-model="register.checkPassword"
-            type="password"
-            maxlength="512"
-            minlength="8"
-            placeholder="确认密码: "
-            show-password
-            @keydown.enter.native="registerAction"
-        />
-      </el-form-item>
-    </el-form>
-    <el-button
-        type="primary"
-        round
-        style="width: 60%;"
-        @click="registerAction"
-    >注 册
-    </el-button>
-    <p>已有账号? 点
-      <router-link to="login"
-                   style="text-decoration: none; color:#eee; font-weight: 700"
-      >这里登录
-      </router-link>
-    </p>
+    <random-tree live-ratio="0.65"/>
+    <div class="register-body">
+      <h1>注 册</h1>
+      <el-form :rules="rules" :model="register" ref="register">
+        <el-form-item prop="account">
+          <el-input
+              v-model="register.account"
+              type="text"
+              maxlength="256"
+              minlength="6"
+              placeholder="用户账号: "
+          />
+        </el-form-item>
+        <el-form-item prop="password">
+          <el-input
+              v-model="register.password"
+              type="password"
+              maxlength="512"
+              minlength="8"
+              placeholder="用户密码: "
+              show-password
+          />
+        </el-form-item>
+        <el-form-item prop="checkPassword">
+          <el-input
+              v-model="register.checkPassword"
+              type="password"
+              maxlength="512"
+              minlength="8"
+              placeholder="确认密码: "
+              show-password
+              @keydown.enter.native="registerAction"
+          />
+        </el-form-item>
+      </el-form>
+      <el-button
+          type="primary"
+          round
+          style="width: 60%;"
+          @click="registerAction"
+      >注 册
+      </el-button>
+      <p style="margin-top: 15px;"
+      >已有账号? 点
+        <router-link to="login"
+                     style="text-decoration: none; color:#eee; font-weight: 700"
+        >这里登录
+        </router-link>
+      </p>
+    </div>
   </div>
 </template>
 
 <script>
+import RandomTree from "@/components/RandomTree.vue";
 export default {
+  name: "RegisterPage",
+  components: {
+    RandomTree
+  },
   data() {
     const validateAccount = (rule, value, callback) => {
       if (value === '') {
@@ -132,32 +141,40 @@ export default {
 
 <style scoped>
 .register {
-  width: 640px;
-  height: 800px;
-  padding: 32px;
+  display: flex;
+  flex-direction: row;
+}
+
+.register-body {
+  width: 400px;
+  padding: 64px;
 }
 
 @media screen and (max-width: 768px) {
   .register {
-    width: 320px;
-    height: 500px;
     padding: 16px;
+    flex-direction: column;
+  }
+
+  .register-body {
+    width: 300px;
+    padding: 32px;
   }
 }
 
-.register h1 {
+.register .register-body h1 {
   color: #eee;
 }
 
-.register p {
+.register .register-body p {
   color: #bbb;
 }
 
-.register .el-input {
+.register .register-body .el-input {
   margin-top: 8%;
 }
 
-.register .el-button {
+.register .register-body .el-button {
   margin-top: 10%;
 }
 </style>
