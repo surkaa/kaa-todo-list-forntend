@@ -1,6 +1,6 @@
 <template>
   <div>
-    <canvas ref="canvas"></canvas>
+    <canvas :width="width" :height="height" ref="canvas"></canvas>
   </div>
 </template>
 
@@ -8,6 +8,40 @@
 import Vue from 'vue';
 
 export default Vue.extend({
+  props: {
+    width: {
+      type: Number,
+      default: 180
+    },
+    height: {
+      type: Number,
+      default: 180
+    },
+    thickRatio: {
+      type: Number,
+      default: 0.8
+    },
+    lengthRatio: {
+      type: Number,
+      default: 0.9
+    },
+    liveRatio: {
+      type: Number,
+      default: 0.5
+    },
+    flowerOfEndRatio: {
+      type: Number,
+      default: 1
+    },
+    flowerOfMiddleRatio: {
+      type: Number,
+      default: 0.1
+    },
+    maxDirChildren: {
+      type: Number,
+      default: 30
+    }
+  },
   mounted() {
     this.drawCanvas();
   },
@@ -21,15 +55,15 @@ export default Vue.extend({
       this.draw(0, 0, 30, 80, 90 + (Math.random() - 0.5) * 25, context);
     },
     draw(v0x: number, v0y: number, thick: number, length: number, dir: number, context: CanvasRenderingContext2D) {
-      if (thick < 20 && Math.random() < 0.4) {
-        if (Math.random() < 0.1) {
+      if (thick < 15 && Math.random() < (1 - this.liveRatio)) {
+        if (Math.random() < this.flowerOfMiddleRatio) {
           // 在树枝末端绘制花朵
           this.drawFlower(v0x, v0y, context);
         }
         return;
       }
       if (thick < 1) {
-        if (Math.random() < 0.05) {
+        if (Math.random() < this.flowerOfEndRatio) {
           // 在树枝末端绘制花朵
           this.drawFlower(v0x, v0y, context);
         }
@@ -44,8 +78,8 @@ export default Vue.extend({
       context.lineCap = 'round';
       context.lineTo(v1x, v1y);
       context.stroke();
-      this.draw(v1x, v1y, thick * 0.8, length * 0.9, dir + 25 * Math.random(), context);
-      this.draw(v1x, v1y, thick * 0.8, length * 0.9, dir - 25 * Math.random(), context);
+      this.draw(v1x, v1y, thick * this.thickRatio, length * this.lengthRatio, dir + this.maxDirChildren * Math.random(), context);
+      this.draw(v1x, v1y, thick * this.thickRatio, length * this.lengthRatio, dir - this.maxDirChildren * Math.random(), context);
     },
     drawFlower(x: number, y: number, context: CanvasRenderingContext2D) {
       context.beginPath();
