@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <random-tree/>
+    <random-tree live-ratio="0.6"/>
     <div class="login-body">
       <h1>登 录</h1>
       <p style="font-size: 12px">请使用用户中心账户登录</p>
