@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="random-tree">
     <canvas :width="width" :height="height" ref="canvas"></canvas>
   </div>
 </template>
@@ -91,3 +91,12 @@ export default Vue.extend({
   },
 });
 </script>
+
+<style>
+.random-tree {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+</style>
