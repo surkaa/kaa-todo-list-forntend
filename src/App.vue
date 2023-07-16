@@ -10,6 +10,10 @@
   outline: 0;
 }
 
+html {
+  font-size: 10px;
+}
+
 body {
   margin: 0;
 }
