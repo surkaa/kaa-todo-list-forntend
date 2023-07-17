@@ -49,6 +49,7 @@
 <script>
 import RandomTree from "@/components/RandomTree.vue";
 import backend from "@/backend";
+import axios from "axios";
 
 export default {
   name: "LoginPage",
@@ -101,7 +102,7 @@ export default {
         }
       })
       if (flag) return
-      this.$axios.post(
+      axios.post(
           backend + '/users/login',
           this.login
       ).then(
