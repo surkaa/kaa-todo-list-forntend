@@ -17,6 +17,14 @@ export default {
     return {
       data: new Todo("No Title", "", true)
     }
+  },
+  created() {
+    axios.get(backend + '/users').then((res) => {
+      if (res.data.code == 6150) {
+        alert("请先登录后查看哦~")
+        window.location.href = '/todolist/login'
+      }
+    })
   }
 }
 
