@@ -11,42 +11,34 @@ export default Vue.extend({
   props: {
     // 宽度
     width: {
-      type: Number,
       default: 180
     },
     // 高度
     height: {
-      type: Number,
       default: 180
     },
     // 树枝粗细的迭代倍率
     thickRatio: {
-      type: Number,
       default: 0.8
     },
     // 树枝长度的迭代倍率
     lengthRatio: {
-      type: Number,
       default: 0.9
     },
     // 整棵树的茂盛程度
     liveRatio: {
-      type: Number,
       default: 0.5
     },
     // 树枝末端有花的数量占所有末端的比例
     flowerOfEndRatio: {
-      type: Number,
       default: 1
     },
     // 树枝躯干有花的数量占所有躯干的比例
     flowerOfMiddleRatio: {
-      type: Number,
       default: 0.1
     },
     // 树枝角度迭代的范围(-dir, dir)角度值
     maxDirChildren: {
-      type: Number,
       default: 30
     }
   },
