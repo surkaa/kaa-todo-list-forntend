@@ -55,6 +55,8 @@
 
 <script>
 import RandomTree from "@/components/RandomTree.vue";
+import backend from "@/backend";
+
 export default {
   name: "RegisterPage",
   components: {
@@ -117,18 +119,24 @@ export default {
   },
   methods: {
     registerAction() {
+      let flag = false
+      this.$refs['register'].validate((value) => {
+        if (!value) {
+          flag = true
+        }
+      })
+      if (flag) return
       this.$axios.post(
-          'http://localhost:8000/users/register',
+          backend + '/users/register',
           this.register
       ).then(
           function (res) {
             if (res.data.code > 0) {
-              alert("注册错误: " + res.data.description)
+              alert("注册错误: " + res.data.message + ' ' + res.data.description)
               return
-            } else {
-              alert("注册成功 即将跳转登陆页面")
-              window.location.href = '/todolist/login'
             }
+            alert("注册成功 即将跳转登陆页面")
+            window.location.href = '/todolist/login'
           }
       ).catch(function (error) {
         console.log(error)

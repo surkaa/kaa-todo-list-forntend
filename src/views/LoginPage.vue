@@ -48,6 +48,7 @@
 
 <script>
 import RandomTree from "@/components/RandomTree.vue";
+import backend from "@/backend";
 
 export default {
   name: "LoginPage",
@@ -93,18 +94,24 @@ export default {
   },
   methods: {
     loginAction() {
+      let flag = false
+      this.$refs['login'].validate((value) => {
+        if (!value) {
+          flag = true
+        }
+      })
+      if (flag) return
       this.$axios.post(
-          'http://localhost:8000/users/login',
+          backend + '/users/login',
           this.login
       ).then(
           function (res) {
             if (res.data.code > 0) {
               alert("登录错误: " + res.data.description)
               return
-            } else {
-              alert("登录成功 将进入ToDoList页面")
-              window.location.href = '/todolist'
             }
+            alert("登录成功 将进入ToDoList页面")
+            window.location.href = '/todolist'
           }
       ).catch(function (error) {
         console.log(error)
