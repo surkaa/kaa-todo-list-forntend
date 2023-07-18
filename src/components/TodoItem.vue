@@ -1,11 +1,11 @@
 <template>
   <div class="todo-item">
     <div class="todo-item-flag">
-      <el-checkbox v-model="data.flag"></el-checkbox>
+      <el-checkbox v-model="todo.flag == 1"></el-checkbox>
     </div>
     <div class="todo-item-content">
       <div class="todo-item-title">
-        <span>{{ data.title }}</span>
+        <span>{{ todo.title }}</span>
       </div>
     </div>
   </div>
@@ -16,7 +16,7 @@ import {Todo} from "@/ts/Todo";
 
 export default {
   props: {
-    data: {
+    todo: {
       type: Object as () => Todo,
       require: true
     }

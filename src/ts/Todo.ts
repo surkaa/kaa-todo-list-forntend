@@ -1,7 +1,7 @@
 export interface Todo {
     id: number;             // 笔记id
     uid: number             // 创建这个笔记的用户id
-    flag: boolean;          // 是否完成
+    flag: number;          // 是否完成
     title: string;          // 待办事项的标题
     description: string;    // 细节描述
     createTime: string;     // 创建时间
