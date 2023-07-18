@@ -161,4 +161,8 @@ export default {
 .login .login-body .el-button {
   margin-top: 10%;
 }
+
+>>> .el-input__inner {
+  border-radius: 10px;
+}
 </style>
