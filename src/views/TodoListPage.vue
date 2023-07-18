@@ -1,14 +1,14 @@
 <template>
   <div class="todo-list">
-    <todo-item v-for="item in data" :data="item" :key="item.title"/>
+    <todo-item v-for="item in data.data" :data="item" :key="item.title"/>
   </div>
 </template>
 
 <script lang="ts">
 import TodoItem from "@/components/TodoItem.vue";
-import {Todo} from "@/ts/Todo";
 import router from "@/router";
 import request from '@/utils/request'
+import {Todo} from "@/ts/Todo";
 
 export default {
   name: "TodoListPage",
@@ -17,13 +17,12 @@ export default {
   },
   data() {
     return {
-      data: [
-        new Todo("No Title", "", Math.random() < 0.5)
-      ]
+      data: [] as Todo[]
     }
   },
   created() {
-    request.get('/users').then((res: any) => {
+    request.get('/todo').then((res: any) => {
+      this.data = res.data
       if (res.data.code > 0) {
         alert("请先登录后查看哦~")
         router.push('/login')
@@ -38,7 +37,7 @@ export default {
 .todo-list {
   width: 80%;
   height: 80%;
-  background-color: rgba(238, 238, 238, 0.5);
+  background-color: rgba(238, 238, 238, 0.05);
   border-radius: 10px;
 }
 </style>

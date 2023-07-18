@@ -17,7 +17,7 @@ import {Todo} from "@/ts/Todo";
 export default {
   props: {
     data: {
-      type: Todo,
+      type: Object as () => Todo,
       require: true
     }
   }
