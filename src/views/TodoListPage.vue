@@ -24,7 +24,6 @@ export default {
   },
   created() {
     request.get('/users').then((res: any) => {
-      console.log(res.data)
       if (res.data.code == 6150) {
         alert("请先登录后查看哦~")
         router.push('/login')
