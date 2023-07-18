@@ -48,8 +48,8 @@
 
 <script>
 import RandomTree from "@/components/RandomTree.vue";
-import backend from "@/backend";
-import axios from "axios";
+import request from "@/utils/request";
+import {setLocalStorage} from "@/utils/local-storage";
 
 export default {
   name: "LoginPage",
@@ -102,8 +102,8 @@ export default {
         }
       })
       if (flag) return
-      axios.post(
-          backend + '/users/login',
+      request.post(
+          '/users/login',
           this.login
       ).then(
           function (res) {
@@ -111,6 +111,7 @@ export default {
               alert("登录错误: " + res.data.description)
               return
             }
+            setLocalStorage('token', res.data.data)
             alert("登录成功 将进入ToDoList页面")
             window.location.href = '/todolist'
           }

@@ -55,8 +55,7 @@
 
 <script>
 import RandomTree from "@/components/RandomTree.vue";
-import backend from "@/backend";
-import axios from "axios";
+import request from "@/utils/request";
 
 export default {
   name: "RegisterPage",
@@ -127,8 +126,8 @@ export default {
         }
       })
       if (flag) return
-      axios.post(
-          backend + '/users/register',
+      request.post(
+          '/users/register',
           this.register
       ).then(
           function (res) {

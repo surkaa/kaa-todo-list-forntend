@@ -7,9 +7,8 @@
 <script lang="ts">
 import TodoItem from "@/components/TodoItem.vue";
 import {Todo} from "@/ts/Todo";
-import axios from "axios";
-import backend from "@/backend";
 import router from "@/router";
+import request from '@/utils/request'
 
 export default {
   name: "TodoListPage",
@@ -24,7 +23,8 @@ export default {
     }
   },
   created() {
-    axios.get(backend + '/users').then((res) => {
+    request.get('/users').then((res: any) => {
+      console.log(res.data)
       if (res.data.code == 6150) {
         alert("请先登录后查看哦~")
         router.push('/login')
