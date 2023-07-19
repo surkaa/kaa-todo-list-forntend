@@ -1,11 +1,12 @@
 <template>
-  <div class="random-tree">
-    <canvas :width="width" :height="height" ref="canvas"></canvas>
+  <div class="random-tree" @click="reloadTree">
+    <canvas :width="width" :height="height" ref="canvas" title="轻触以刷新"></canvas>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
+import router from "@/router";
 
 export default Vue.extend({
   props: {
@@ -88,6 +89,9 @@ export default Vue.extend({
       context.fill();
       context.closePath();
     },
+    reloadTree() {
+      router.go(0)
+    }
   },
 });
 </script>
@@ -98,5 +102,7 @@ export default Vue.extend({
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+
 }
 </style>
