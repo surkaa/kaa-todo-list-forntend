@@ -35,11 +35,17 @@ export default {
 
 <style scoped>
 .todo-list {
-  width: 95%;
+  width: 62%;
   height: 90%;
   background-color: rgba(238, 238, 238, 0.05);
   border-radius: 1rem;
-  overflow: auto;
+  overflow-y: auto;
+}
+
+@media screen and (max-width: 768px) {
+  .todo-list {
+    width: 95%;
+  }
 }
 
 /* 滚动条 */
