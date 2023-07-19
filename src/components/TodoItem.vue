@@ -1,7 +1,7 @@
 <template>
   <div class="todo-item">
     <div class="todo-item-flag">
-      <el-checkbox v-model="todo.flag == 1"></el-checkbox>
+      <el-checkbox v-model="flag" @change="change"></el-checkbox>
     </div>
     <div class="todo-item-content">
       <div class="todo-item-title">
@@ -24,6 +24,16 @@ export default defineComponent({
       type: Object as () => Todo,
       require: true
     }
+  },
+  data() {
+    return {
+      flag: false
+    }
+  },
+  methods: {
+    change() {
+
+    }
   }
 })
 </script>
@@ -36,16 +46,21 @@ export default defineComponent({
   margin: 1rem;
   border-radius: 1rem;
   background-color: rgba(238, 238, 238, 0.4);
+  align-items: center;
 }
 
 .todo-item-flag {
-  margin: 0.5rem;
+  margin: 1.5rem;
+  width: 3rem;
+  height: 3rem;
 }
 
 .todo-item-content {
-  margin: auto 2rem;
+  margin: auto 0;
+  padding: 0 2rem;
   font-size: 1.8rem;
   font-weight: bold;
+  width: calc(100% - 5rem);
   display: flex;
   flex-direction: column;
 }
@@ -60,10 +75,25 @@ export default defineComponent({
 .todo-item-desc {
   font-size: 1rem;
   text-align: left;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .todo-item-title::before {
   content: ' - ';
 }
 
+>>> .el-checkbox__inner {
+  width: 24px;
+  height: 24px;
+  background-color: rgba(238, 238, 238, 0.7);
+}
+
+>>> .el-checkbox__inner::after {
+  height: 10px;
+  left: 10px;
+  top: 4px;
+}
 </style>
