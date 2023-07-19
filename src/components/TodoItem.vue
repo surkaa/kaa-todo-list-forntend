@@ -16,15 +16,16 @@
 
 <script lang="ts">
 import {Todo} from "@/ts/Todo";
+import {defineComponent} from "vue";
 
-export default {
+export default defineComponent({
   props: {
     todo: {
       type: Object as () => Todo,
       require: true
     }
   }
-}
+})
 </script>
 
 <style scoped>
