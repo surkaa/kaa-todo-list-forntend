@@ -53,17 +53,18 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import RandomTree from "@/components/RandomTree.vue";
 import request from "@/utils/request";
+import {defineComponent} from "vue";
 
-export default {
+export default defineComponent({
   name: "RegisterPage",
   components: {
     RandomTree
   },
   data() {
-    const validateAccount = (rule, value, callback) => {
+    const validateAccount = (rule: any, value: string, callback: any) => {
       if (value === '') {
         callback(new Error("请输入注册账号"))
       } else {
@@ -76,7 +77,7 @@ export default {
         }
       }
     }
-    const validatorPassword = (rule, value, callback) => {
+    const validatorPassword = (rule: any, value: string, callback: any) => {
       if (value === '') {
         callback(new Error("请输入注册密码"))
       } else {
@@ -86,7 +87,7 @@ export default {
         callback()
       }
     }
-    const validatorCheckPassword = (rule, value, callback) => {
+    const validatorCheckPassword = (rule: any, value: string, callback: any) => {
       if (value === '') {
         callback(new Error("请输入注册密码"))
       } else {
@@ -119,8 +120,8 @@ export default {
   },
   methods: {
     registerAction() {
-      let flag = false
-      this.$refs['register'].validate((value) => {
+      let flag = false;
+      (this.$refs['register'] as HTMLFormElement).validate((value: string) => {
         if (!value) {
           flag = true
         }
@@ -130,7 +131,7 @@ export default {
           '/users/register',
           this.register
       ).then(
-          function (res) {
+          function (res: any) {
             if (res.data.code > 0) {
               alert("注册错误: " + res.data.message + ' ' + res.data.description)
               return
@@ -144,7 +145,7 @@ export default {
       })
     }
   }
-}
+})
 </script>
 
 <style scoped>
