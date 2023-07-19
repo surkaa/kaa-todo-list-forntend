@@ -13,6 +13,7 @@ import router from "@/router";
 import request from '@/utils/request'
 import {Todo} from "@/ts/Todo";
 import {defineComponent} from "vue";
+import dayjs from "dayjs";
 
 export default defineComponent({
   name: "TodoListPage",
@@ -34,6 +35,12 @@ export default defineComponent({
       this.data = res.data.data
       if (this.data.length != 0) {
         this.isEmpty = false
+        // 根据预计完成时间最早排序
+        this.data.sort((a, b) => {
+          let aTarget = dayjs(a.targetTile).unix()
+          let bTarget = dayjs(b.targetTile).unix()
+          return aTarget - bTarget
+        })
       }
     })
   },
