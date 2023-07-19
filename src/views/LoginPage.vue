@@ -108,7 +108,7 @@ export default {
       ).then(
           function (res) {
             if (res.data.code > 0) {
-              alert("登录错误: " + res.data.description)
+              alert("登录错误: " + res.data.message + ' ' +  res.data.description)
               return
             }
             setLocalStorage('token', res.data.data)
