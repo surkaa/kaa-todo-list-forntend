@@ -35,9 +35,40 @@ export default {
 
 <style scoped>
 .todo-list {
-  width: 80%;
-  height: 80%;
+  width: 95%;
+  height: 90%;
   background-color: rgba(238, 238, 238, 0.05);
-  border-radius: 10px;
+  border-radius: 1rem;
+  overflow: auto;
+}
+
+/* 滚动条 */
+.todo-list::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.todo-list::-webkit-scrollbar-track {
+  width: 6px;
+  background: rgba(16, 31, 28, 0.1);
+  -webkit-border-radius: 1em;
+  -moz-border-radius: 1em;
+  margin: 0.5rem 0;
+  border-radius: 1em;
+}
+
+.todo-list::-webkit-scrollbar-thumb {
+  background-color: rgba(238, 238, 238, 0.1);
+  background-clip: padding-box;
+  min-height: 28px;
+  -webkit-border-radius: 1em;
+  -moz-border-radius: 1em;
+  border-radius: 1em;
+  transition: background-color .3s;
+  cursor: pointer;
+}
+
+.todo-list::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(144, 147, 153, .3);
 }
 </style>
