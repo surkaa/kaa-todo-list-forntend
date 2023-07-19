@@ -21,7 +21,7 @@ export default {
     }
   },
   created() {
-    request.get('/todo').then((res: any) => {
+    request.get('/todos').then((res: any) => {
       this.data = res.data
       if (res.data.code > 0) {
         alert("请先登录后查看哦~")
