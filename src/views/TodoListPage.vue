@@ -42,6 +42,9 @@ export default defineComponent({
           return aTarget - bTarget
         })
       }
+    }).catch(_ => {
+      alert("刷新失败, 请尝试重新登陆")
+      router.push("/login")
     })
   },
   methods: {
