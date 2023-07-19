@@ -37,8 +37,8 @@ export default defineComponent({
         this.isEmpty = false
         // 根据预计完成时间最早排序
         this.data.sort((a, b) => {
-          let aTarget = dayjs(a.targetTile).unix()
-          let bTarget = dayjs(b.targetTile).unix()
+          let aTarget = dayjs(a.targetTime).unix()
+          let bTarget = dayjs(b.targetTime).unix()
           return aTarget - bTarget
         })
       }
