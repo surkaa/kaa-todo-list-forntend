@@ -133,21 +133,29 @@ export default defineComponent({
         }
       })
       if (flag) return
-      this.dialogForInsert = false
+      let t = this.insertTodo.targetTime;
+      if (typeof t === 'string') {
+        this.insertTodo.targetTime = dayjs(t).unix()
+      } else if (t instanceof Date) {
+        this.insertTodo.targetTime = t.getTime()
+      } else {
+        Message.error("发生错误")
+        this.insertTodo.targetTime = 0
+      }
       request.post(
           '/todos',
           this.insertTodo
       ).then(res => {
         if (res.data.code !== 0) {
           Message.error("保存失败")
-          this.dialogForInsert = true
+        } else {
+          router.go(0)
+          Message.success("保存成功")
+          this.dialogForInsert = false
         }
-        router.go(0)
-        Message.success("保存成功")
       }).catch(error => {
         Message.error(error)
       })
-      Message.success("添加成功")
     }
   }
 })
