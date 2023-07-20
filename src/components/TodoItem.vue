@@ -14,16 +14,12 @@
   </div>
 </template>
 
-<script lang="ts">
-import {Todo} from "@/ts/Todo";
+<script>
 import {defineComponent} from "vue";
 
 export default defineComponent({
   props: {
-    todo: {
-      type: Object as () => Todo,
-      require: true
-    }
+    todo: null
   },
   data() {
     return {
@@ -32,7 +28,13 @@ export default defineComponent({
   },
   methods: {
     change() {
-
+      if (this.todo.flag === 1) {
+        this.todo.flag = 0
+        this.flag = false
+      } else {
+        this.todo.flag = 1
+        this.flag = true
+      }
     }
   }
 })
