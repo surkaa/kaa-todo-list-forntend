@@ -49,6 +49,7 @@
 <script>
 import RandomTree from "@/components/RandomTree.vue";
 import request from "@/utils/request";
+import {Message} from "element-ui";
 import {setLocalStorage} from "@/utils/local-storage";
 import {defineComponent} from "vue";
 
@@ -109,15 +110,16 @@ export default defineComponent({
       ).then(
           function (res) {
             if (res.data.code > 0) {
-              alert("登录错误: " + res.data.message + ' ' + res.data.description)
+              console.log(res)
+              Message.error("登录错误: " + res.data.message + ' ' + res.data.description)
               return
             }
             setLocalStorage('token', res.data.data)
-            alert("登录成功 将进入ToDoList页面")
             window.location.href = '/todolist'
           }
-      ).catch(_ => {
-        alert("登录发生错误, 请稍后重试")
+      ).catch(error => {
+        console.log(error)
+        Message.error("登录发生错误, 请稍后重试")
       })
     }
   }

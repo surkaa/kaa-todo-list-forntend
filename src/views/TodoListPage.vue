@@ -46,6 +46,7 @@ import router from "@/router";
 import request from '@/utils/request'
 import {defineComponent} from "vue";
 import dayjs from "dayjs";
+import {Message} from "element-ui";
 
 export default defineComponent({
   name: "TodoListPage",
@@ -93,9 +94,10 @@ export default defineComponent({
     }
   },
   created() {
+    Message.info("正在加载待办事项")
     request.get('/todos').then((res) => {
       if (res.data.code > 0) {
-        alert("请先登录后查看哦~")
+        Message.error("请先登录后查看哦~")
         router.push('/login')
       }
       this.data = res.data.data
@@ -111,9 +113,10 @@ export default defineComponent({
       // 默认三天的预计完成时间
       this.insertTodo.targetTime.setTime(new Date().getTime() + 3600 * 1000 * 24 * 3)
     }).catch(_ => {
-      alert("刷新失败, 请尝试重新登陆")
+      Message.error("刷新失败, 请尝试重新登陆")
       window.location.href = '/todolist/login'
     })
+    Message.success("加载成功")
   },
   methods: {
     reload() {
@@ -136,14 +139,15 @@ export default defineComponent({
           this.insertTodo
       ).then(res => {
         if (res.data.code !== 0) {
-          alert("保存失败")
+          Message.error("保存失败")
           this.dialogForInsert = true
         }
         router.go(0)
-        alert("保存成功")
+        Message.success("保存成功")
       }).catch(error => {
-        console.log(error)
+        Message.error(error)
       })
+      Message.success("添加成功")
     }
   }
 })

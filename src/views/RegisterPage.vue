@@ -57,6 +57,7 @@
 import RandomTree from "@/components/RandomTree.vue";
 import request from "@/utils/request";
 import {defineComponent} from "vue";
+import {Message} from "element-ui";
 
 export default defineComponent({
   name: "RegisterPage",
@@ -133,15 +134,15 @@ export default defineComponent({
       ).then(
           function (res) {
             if (res.data.code > 0) {
-              alert("注册错误: " + res.data.message + ' ' + res.data.description)
+              Message.error("注册错误: " + res.data.message + ' ' + res.data.description)
               return
             }
-            alert("注册成功 即将跳转登陆页面")
+            Message.success("注册成功 即将跳转登陆页面")
             window.location.href = '/todolist/login'
           }
       ).catch(function (error) {
         console.log(error)
-        alert("注册发生错误, 请稍后重试")
+        Message.error("注册发生错误, 请稍后重试")
       })
     }
   }
