@@ -3,7 +3,7 @@
     <div class="todo-item-flag">
       <el-checkbox v-model="flag" @change="change"></el-checkbox>
     </div>
-    <div class="todo-item-content">
+    <div class="todo-item-content" :class="{'checked': flag}">
       <div class="todo-item-title">
         <span>{{ todo.title }}</span>
       </div>
@@ -49,6 +49,15 @@ export default defineComponent({
   border-radius: 1rem;
   background-color: rgba(238, 238, 238, 0.4);
   align-items: center;
+}
+
+.checked {
+  opacity: 0.1;
+  transition: opacity 0.3s;
+}
+
+.checked .todo-item-title {
+  text-decoration: line-through;
 }
 
 .todo-item-flag {
