@@ -4,9 +4,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import router from "@/router";
+<script>
+import Vue from "vue";
 
 export default Vue.extend({
   props: {
@@ -46,16 +45,17 @@ export default Vue.extend({
   mounted() {
     this.drawCanvas();
   },
+  inject: ["reloadFun"],
   methods: {
     drawCanvas() {
-      const canvas = this.$refs.canvas as HTMLCanvasElement;
+      const canvas = this.$refs.canvas;
       const context = canvas.getContext('2d');
       if (!context) return;
       context.translate(canvas.width / 2, canvas.height);
       context.scale(0.2, -0.2);
       this.draw(0, 0, 30, 80, 90 + (Math.random() - 0.5) * 25, context);
     },
-    draw(v0x: number, v0y: number, thick: number, length: number, dir: number, context: CanvasRenderingContext2D) {
+    draw(v0x, v0y, thick, length, dir, context) {
       if (thick < 15 && Math.random() < (1 - this.liveRatio)) {
         if (Math.random() < this.flowerOfMiddleRatio) {
           // 在树枝末端绘制花朵
@@ -82,7 +82,7 @@ export default Vue.extend({
       this.draw(v1x, v1y, thick * this.thickRatio, length * this.lengthRatio, dir + this.maxDirChildren * Math.random(), context);
       this.draw(v1x, v1y, thick * this.thickRatio, length * this.lengthRatio, dir - this.maxDirChildren * Math.random(), context);
     },
-    drawFlower(x: number, y: number, context: CanvasRenderingContext2D) {
+    drawFlower(x, y, context) {
       context.beginPath();
       context.arc(x, y, 5, 0, 2 * Math.PI);
       context.fillStyle = 'red';
@@ -90,7 +90,7 @@ export default Vue.extend({
       context.closePath();
     },
     reloadTree() {
-      router.go(0)
+      this.reloadFun()
     }
   },
 });

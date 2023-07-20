@@ -1,8 +1,33 @@
 <template>
-  <div id="app">
-    <router-view/>
+  <div id="app" @kaa="reload">
+    <router-view v-if="flag"/>
   </div>
 </template>
+
+<script>
+import {defineComponent} from "vue";
+
+export default defineComponent({
+  data() {
+    return {
+      flag: true
+    }
+  },
+  provide() {
+    return {
+      reloadFun: this.reload
+    }
+  },
+  methods: {
+    reload() {
+      this.flag = false
+      this.$nextTick(function () {
+        this.flag = true
+      })
+    }
+  }
+})
+</script>
 
 <style>
 * {
