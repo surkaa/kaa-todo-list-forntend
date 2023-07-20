@@ -46,7 +46,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import RandomTree from "@/components/RandomTree.vue";
 import request from "@/utils/request";
 import {setLocalStorage} from "@/utils/local-storage";
@@ -56,7 +56,7 @@ export default defineComponent({
   name: "LoginPage",
   components: {RandomTree},
   data() {
-    const account = (rule: any, value: string, callback: any) => {
+    const account = (rule, value, callback) => {
       if (value === '') {
         callback(new Error("请输入登录账号"))
       } else {
@@ -69,7 +69,7 @@ export default defineComponent({
         }
       }
     }
-    const password = (rule: any, value: string, callback: any) => {
+    const password = (rule, value, callback) => {
       if (value === '') {
         callback(new Error("请输入登录密码"))
       } else {
@@ -97,7 +97,7 @@ export default defineComponent({
   methods: {
     loginAction() {
       let flag = false;
-      (this.$refs['login']! as HTMLFormElement).validate((value: string) => {
+      this.$refs['login'].validate((value) => {
         if (!value) {
           flag = true
         }
@@ -107,7 +107,7 @@ export default defineComponent({
           '/users/login',
           this.login
       ).then(
-          function (res: any) {
+          function (res) {
             if (res.data.code > 0) {
               alert("登录错误: " + res.data.message + ' ' + res.data.description)
               return
