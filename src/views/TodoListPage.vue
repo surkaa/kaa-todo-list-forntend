@@ -12,11 +12,12 @@
             </el-form-item>
           </el-row>
           <el-row>
-            <el-form-item label="预计完成时间" prop="targetTime">
+            <el-form-item label="预计完成时间 (默认三天后)" prop="targetTime">
               <el-date-picker
                   type="datetime"
                   style="width: 100%"
                   :picker-options="pickerOptions"
+                  :editable="false"
                   v-model="insertTodo.targetTime"
                   value-format="timestamp"
               ></el-date-picker>
@@ -58,7 +59,7 @@ export default defineComponent({
       dialogForInsert: false,
       insertTodo: {
         title: '',
-        targetTime: 0,
+        targetTime: new Date(),
         description: ''
       },
       rules: {
@@ -107,6 +108,8 @@ export default defineComponent({
           return aTarget - bTarget
         })
       }
+      // 默认三天的预计完成时间
+      this.insertTodo.targetTime.setTime(new Date().getTime() + 3600 * 1000 * 24 * 3)
     }).catch(_ => {
       alert("刷新失败, 请尝试重新登陆")
       window.location.href = '/todolist/login'
@@ -117,7 +120,7 @@ export default defineComponent({
       location.reload()
     },
     cancel() {
-      console.log('cancel')
+      this.dialogForInsert = false
     },
     handleAdd() {
       let flag = false;
@@ -163,7 +166,7 @@ export default defineComponent({
   overflow-y: auto;
 }
 
-@media screen and (max-width: 768px) {
+@media (max-width: 768px) {
   .todo-list {
     width: 95%;
   }
