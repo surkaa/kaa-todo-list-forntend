@@ -81,6 +81,7 @@ export default defineComponent({
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin-left: 14px;
 }
 
 .todo-item-title::before {

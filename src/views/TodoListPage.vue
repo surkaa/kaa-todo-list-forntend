@@ -3,15 +3,46 @@
     <el-empty class="todo-empty-view" v-if="isEmpty" description="暂无待办事项">
       <el-button @click="reload">轻触刷新</el-button>
     </el-empty>
+    <div class="insert-todo">
+      <el-dialog title="新增代办" :visible.sync="dialogForInsert">
+        <el-form ref="insert-form" :model="insertTodo" label-position="right" :rules="rules">
+          <el-row>
+            <el-form-item class="title-input" label="代办标题" prop="title">
+              <el-input v-model="insertTodo.title"></el-input>
+            </el-form-item>
+          </el-row>
+          <el-row>
+            <el-form-item label="预计完成时间" prop="targetTime">
+              <el-date-picker
+                  type="datetime"
+                  style="width: 100%"
+                  :picker-options="pickerOptions"
+                  v-model="insertTodo.targetTime"
+                  value-format="timestamp"
+              ></el-date-picker>
+            </el-form-item>
+          </el-row>
+          <el-row>
+            <el-form-item label="详细信息">
+              <el-input v-model="insertTodo.description" type="textarea"></el-input>
+            </el-form-item>
+          </el-row>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="cancel">取消</el-button>
+          <el-button type="primary" @click="handleAdd">确定</el-button>
+        </div>
+      </el-dialog>
+    </div>
     <todo-item v-if="!isEmpty" v-for="item in data" :todo="item" :key="item.id"/>
+    <el-button class="add-btn" @click="dialogForInsert = true" type="primary" icon="el-icon-circle-plus"/>
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import TodoItem from "@/components/TodoItem.vue";
 import router from "@/router";
 import request from '@/utils/request'
-import {Todo} from "@/ts/Todo";
 import {defineComponent} from "vue";
 import dayjs from "dayjs";
 
@@ -23,17 +54,51 @@ export default defineComponent({
   data() {
     return {
       isEmpty: true,
-      data: [] as Todo[]
+      data: [],
+      dialogForInsert: false,
+      insertTodo: {
+        title: '',
+        targetTime: 0,
+        description: ''
+      },
+      rules: {
+        title: [{required: true, message: '请1输入代办标题', trigger: 'blur'}],
+        targetTime: [{required: false, message: '请输入代办标题', trigger: 'blur'}]
+      },
+      pickerOptions: {
+        shortcuts: [{
+          text: '三个小时后',
+          onClick(picker) {
+            const date = new Date();
+            date.setTime(date.getTime() + 3600 * 1000 * 3);
+            picker.$emit('pick', date);
+          }
+        }, {
+          text: '明天这个时候',
+          onClick(picker) {
+            const date = new Date();
+            date.setTime(date.getTime() + 3600 * 1000 * 24);
+            picker.$emit('pick', date);
+          }
+        }, {
+          text: '一周后',
+          onClick(picker) {
+            const date = new Date();
+            date.setTime(date.getTime() + 3600 * 1000 * 24 * 7);
+            picker.$emit('pick', date);
+          }
+        }]
+      }
     }
   },
   created() {
-    request.get('/todos').then((res: any) => {
+    request.get('/todos').then((res) => {
       if (res.data.code > 0) {
         alert("请先登录后查看哦~")
         router.push('/login')
       }
       this.data = res.data.data
-      if (this.data.length != 0) {
+      if (this.data.length !== 0) {
         this.isEmpty = false
         // 根据预计完成时间最早排序
         this.data.sort((a, b) => {
@@ -44,12 +109,38 @@ export default defineComponent({
       }
     }).catch(_ => {
       alert("刷新失败, 请尝试重新登陆")
-      router.push("/login")
+      window.location.href = '/todolist/login'
     })
   },
   methods: {
     reload() {
       location.reload()
+    },
+    cancel() {
+      console.log('cancel')
+    },
+    handleAdd() {
+      let flag = false;
+      this.$refs['insert-form'].validate(value => {
+        if (!value) {
+          flag = true
+        }
+      })
+      if (flag) return
+      this.dialogForInsert = false
+      request.post(
+          '/todos',
+          this.insertTodo
+      ).then(res => {
+        if (res.data.code !== 0) {
+          alert("保存失败")
+          this.dialogForInsert = true
+        }
+        router.go(0)
+        alert("保存成功")
+      }).catch(error => {
+        console.log(error)
+      })
     }
   }
 })
@@ -57,11 +148,18 @@ export default defineComponent({
 </script>
 
 <style scoped>
+>>> .el-dialog {
+  background-color: rgb(238, 238, 238, 95%);
+  border-radius: 20px;
+}
+
 .todo-list {
   width: 62%;
   height: 90%;
   background-color: rgba(238, 238, 238, 0.05);
   border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
   overflow-y: auto;
 }
 
@@ -69,6 +167,22 @@ export default defineComponent({
   .todo-list {
     width: 95%;
   }
+
+  >>> .el-dialog {
+    width: 85%;
+  }
+}
+
+.add-btn {
+  width: 20rem;
+  border-radius: 2rem;
+  opacity: 0.7;
+  font-size: 3rem;
+  margin-top: 3rem;
+}
+
+.todo-list .add-btn {
+  align-self: center;
 }
 
 /* 滚动条 */
